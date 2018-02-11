@@ -12,7 +12,9 @@ int main() {
                 freopen("in.txt","r",stdin);
         #endif /// CLown1331
         
-        while( scanf( "%d %d %d", &n, &m, &q ) == 3 ) {
+        while( scanf( "%d %d %d", &n, &m, &q ) == 3 && n + m + q ) {
+                
+                for( int i=0; i<=n; i++ ) for( int j=1; j<=n; j++ ) mp[i][j] = 1 << 28, fl[i][j] = 0;
                 
                 while( m-- ) {
                         
@@ -28,6 +30,20 @@ int main() {
                         
                         mp[y][x] = z;
                         
+                }
+                
+                for( int via=1; via<=n; via++ ) {
+                        
+                        for( int from=1; from<=n; from++) {
+                                
+                                for( int to=1; to<=n; to++ ) {
+                                        
+                                        fl[from][to] |= fl[from][via] & fl[via][to];
+                                        
+                                        mp[from][to] = min( mp[from][to], max( mp[from][via], mp[via][to] ) );
+                                        
+                                }
+                        }
                 }
                 
                 if( cs ) printf( "\n" );
